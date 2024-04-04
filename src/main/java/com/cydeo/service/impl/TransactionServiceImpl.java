@@ -3,12 +3,14 @@ package com.cydeo.service.impl;
 import com.cydeo.enums.AccountType;
 import com.cydeo.exception.AccountOwnershipException;
 import com.cydeo.exception.BalanceNotSufficientException;
+import com.cydeo.exception.UnderConstructionException;
 import com.cydeo.model.Account;
 import com.cydeo.model.Transaction;
 import com.cydeo.repository.AccountRepository;
 import com.cydeo.repository.TransactionRepository;
 import com.cydeo.service.TransactionService;
 import com.cydeo.exception.BadRequestException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,6 +20,9 @@ import java.util.UUID;
 
 @Component
 public class TransactionServiceImpl implements TransactionService {
+
+    @Value("${under_construction}")
+    private boolean underConstruction;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
 
@@ -36,19 +41,23 @@ public class TransactionServiceImpl implements TransactionService {
         - if both accounts are checking, if not, one of them savings, it needs to be same userId
          */
 
-        validateAccount(sender, receiver);
-        checkAccountOwnership(sender, receiver);
-        executeBalanceAndUpdateIfRequired(amount, sender, receiver);
+        if (!underConstruction) {
+            validateAccount(sender, receiver);
+            checkAccountOwnership(sender, receiver);
+            executeBalanceAndUpdateIfRequired(amount, sender, receiver);
 
         /*
             After all validations are completed and transfer is done, we need Transaction object and save/return it.
          */
 
-        Transaction transaction = Transaction.builder().amount(amount).sender(sender.getId()).receiver(receiver.getId())
-                .message(message).createDate(dateCreated).build();
+            Transaction transaction = Transaction.builder().amount(amount).sender(sender.getId()).receiver(receiver.getId())
+                    .message(message).createDate(dateCreated).build();
 
-        // save into db and return
-        return transactionRepository.save(transaction);
+            // save into db and return
+            return transactionRepository.save(transaction);
+        }else {
+            throw new UnderConstructionException("App is under construction, please try it later.");
+        }
 
     }
 
@@ -108,7 +117,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> findAll() {
-        return null;
+    public List<Transaction> findAllTransactions() {
+        return transactionRepository.findAll();
     }
 }

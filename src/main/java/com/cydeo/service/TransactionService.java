@@ -1,6 +1,5 @@
 package com.cydeo.service;
 
-import com.cydeo.enums.AccountType;
 import com.cydeo.model.Account;
 import com.cydeo.model.Transaction;
 
@@ -12,5 +11,5 @@ public interface TransactionService {
 
     Transaction makeTransfer(Account sender, Account receiver, BigDecimal amount, Date dateCreated, String message);
 
-    List<Transaction> findAll();
+    List<Transaction> findAllTransactions();
 }
