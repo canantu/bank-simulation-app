@@ -23,7 +23,7 @@ public class BankSimulationAppApplication {
 
         Account sender = accountService.createNewAccount(BigDecimal.valueOf(70), new Date(), AccountType.CHECKING, 1L);
         Account receiver = accountService.createNewAccount(BigDecimal.valueOf(30), new Date(), AccountType.CHECKING, 2L);
-
+/*
         accountService.listAllAccounts().forEach(System.out::println);
 
         transactionService.makeTransfer(sender, receiver, new BigDecimal(10), new Date(), "Transaction 1");
@@ -31,6 +31,8 @@ public class BankSimulationAppApplication {
         accountService.listAllAccounts().forEach(System.out::println);
 
         System.out.println(transactionService.findAllTransactions().get(0));
+
+ */
 
 
     }
