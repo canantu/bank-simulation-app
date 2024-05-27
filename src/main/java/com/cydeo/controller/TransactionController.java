@@ -54,6 +54,9 @@ public class TransactionController {
     public String getTransactionList(@PathVariable("id") UUID id, Model model){
         List<Transaction> transactionList = transactionService.findTransactionListByAccountId(id);
         model.addAttribute("transactions", transactionList );
+        model.addAttribute("accountId", id);
+        Account account = accountService.findById(id);
+        model.addAttribute("userId", account.getUserId());
         return "transaction/transactions";
     }
 

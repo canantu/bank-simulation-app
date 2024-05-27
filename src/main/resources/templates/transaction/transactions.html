@@ -29,9 +29,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="transaction : ${transactions}">
-                        <td th:text="${transaction.getSender()}"></td>
-                        <td th:text="${transaction.getReceiver()}"></td>
+                    <tr th:each="transaction : ${transactions}"
+                        th:style="${transaction.getSender() == accountId} ? 'background-color: red' : 'background-color: blue' ">
+                        <td th:text="${transaction.getSender() == accountId} ? ${userId} : ${transaction.getSender()}" ></td>
+                        <td th:text="${transaction.getReceiver() == accountId} ? ${userId} : ${transaction.getReceiver()}"></td>
                         <td th:text="${transaction.getAmount()}"></td>
                         <td th:text="${transaction.getCreateDate()}"></td>
                         <td th:text="${transaction.getMessage()}"></td>
