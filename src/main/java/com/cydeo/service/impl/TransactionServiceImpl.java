@@ -120,4 +120,23 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> findAllTransactions() {
         return transactionRepository.findAll();
     }
+
+    @Override
+    public List<Transaction> findLast10Transactions() {
+        return transactionRepository.findLast10Transactions();
+    }
+
+    @Override
+    public Transaction createNewTransaction(UUID sender, UUID receiver, BigDecimal amount, String message, Date date) {
+        Transaction transaction = Transaction.builder()
+                .sender(sender)
+                .receiver(receiver)
+                .amount(amount)
+                .message(message)
+                .createDate(date)
+                .build();
+        return transactionRepository.save(transaction);
+    }
+
+
 }

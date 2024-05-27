@@ -5,13 +5,11 @@ import com.cydeo.model.Account;
 import com.cydeo.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Controller
 public class AccountController {
@@ -46,4 +44,21 @@ public class AccountController {
         System.out.println(newAccount);
         return "redirect:/index";
     }
+    @GetMapping("/delete/{id}")
+    public String deleteAccount(@PathVariable("id") UUID id){
+
+        accountService.deleteByID(id);
+        return "redirect:/index";
+    }
+
+    @GetMapping("/activate/{id}")
+    public String activateAccount(@PathVariable("id") UUID id){
+
+        accountService.activateByID(id);
+        return "redirect:/index";
+    }
+
+
+
+
 }
