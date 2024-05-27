@@ -17,4 +17,6 @@ public interface TransactionService {
     List<Transaction> findLast10Transactions();
 
     Transaction createNewTransaction(UUID sender, UUID receiver, BigDecimal amount, String message, Date date);
+
+    List<Transaction> findTransactionListByAccountId(UUID id);
 }
