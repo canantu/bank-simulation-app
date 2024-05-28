@@ -4,8 +4,11 @@ import com.cydeo.model.Account;
 import com.cydeo.model.Transaction;
 import com.cydeo.service.AccountService;
 import com.cydeo.service.TransactionService;
+import jakarta.validation.Valid;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +35,7 @@ public class TransactionController {
         // provide empty transaction object
         model.addAttribute("transaction", Transaction.builder().build());
         // provide list of all accounts
-        model.addAttribute("accountList", accountService.listAllAccounts());
+        model.addAttribute("accounts", accountService.listAllAccounts());
         // provide list of last 10 transactions that will be displayed on the table
         model.addAttribute("lastTransactions", transactionService.findLast10Transactions());
 
@@ -40,7 +43,14 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer")
-    public String makeTransfer(@ModelAttribute("transaction") Transaction transaction){
+    public String makeTransfer(@Valid  @ModelAttribute("transaction") Transaction transaction, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("accounts", accountService.listAllAccounts());
+            model.addAttribute("lastTransactions", transactionService.findLast10Transactions());
+
+            return "transaction/make-transfer";
+        }
+
         // i have UUID of accounts but i need to provide account object.
         // I need to find accounts based on the ID that i have and use as a parameter to complete make transfer
         Account sender = accountService.findById(transaction.getSender());
