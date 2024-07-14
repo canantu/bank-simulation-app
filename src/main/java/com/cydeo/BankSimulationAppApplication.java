@@ -38,13 +38,9 @@ public class BankSimulationAppApplication {
  */
 
 
-
-        // since I did not create ModelMapper class, but want to use it as bean,
-        // I need to add Bean annotation in configuration class.
-
-
-
     }
+    // since I did not create ModelMapper class, but want to use it as bean,
+    // I need to add Bean annotation in configuration class.
 
     @Bean
     public ModelMapper modelMapper(){
