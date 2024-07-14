@@ -32,8 +32,8 @@ public class TransactionController {
 
         // provide empty transaction object
         model.addAttribute("transaction", new TransactionDTO());
-        // provide list of all accounts
-        model.addAttribute("accounts", accountService.listAllAccounts());
+        // provide list of all active accounts
+        model.addAttribute("accounts", accountService.listAllActiveAccounts());
         // provide list of last 10 transactions that will be displayed on the table
         model.addAttribute("lastTransactions", transactionService.findLast10Transactions());
 
