@@ -30,7 +30,7 @@ public class AccountController {
     @GetMapping("/create-form")
     public String getCreateFormPage(Model model){
 
-        model.addAttribute("account", new AccountDTO());
+        model.addAttribute("accountDTO", new AccountDTO());
         model.addAttribute("accountTypes", AccountType.values());
 
         return "/account/create-account";

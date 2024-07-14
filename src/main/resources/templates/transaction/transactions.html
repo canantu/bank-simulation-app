@@ -30,9 +30,9 @@
                     </thead>
                     <tbody>
                     <tr th:each="transactionDTO : ${transactions}"
-                        th:style="${transactionDTO.getSender() == accountId} ? 'background-color: red' : 'background-color: blue' ">
-                        <td th:text="${transactionDTO.getSender() == accountId} ? ${userId} : ${transactionDTO.getSender()}" ></td>
-                        <td th:text="${transactionDTO.getReceiver() == accountId} ? ${userId} : ${transactionDTO.getReceiver()}"></td>
+                        th:style="${transactionDTO.getSender().id == accountId} ? 'background-color: red' : 'background-color: blue' ">
+                        <td th:text="${transactionDTO.getSender().id == accountId} ? ${userId} : ${transactionDTO.getSender()}" ></td>
+                        <td th:text="${transactionDTO.getReceiver().id == accountId} ? ${userId} : ${transactionDTO.getReceiver()}"></td>
                         <td th:text="${transactionDTO.getAmount()}"></td>
                         <td th:text="${transactionDTO.getCreateDate()}"></td>
                         <td th:text="${transactionDTO.getMessage()}"></td>

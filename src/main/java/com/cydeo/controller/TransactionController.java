@@ -31,7 +31,7 @@ public class TransactionController {
     public String getMakeTransfer(Model model){
 
         // provide empty transaction object
-        model.addAttribute("transaction", new TransactionDTO());
+        model.addAttribute("transactionDTO", new TransactionDTO());
         // provide list of all active accounts
         model.addAttribute("accounts", accountService.listAllActiveAccounts());
         // provide list of last 10 transactions that will be displayed on the table
@@ -41,9 +41,9 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer")
-    public String makeTransfer(@Valid  @ModelAttribute("transaction") TransactionDTO transactionDTO, BindingResult bindingResult, Model model){
+    public String makeTransfer(@Valid  @ModelAttribute("transactionDTO") TransactionDTO transactionDTO, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
-            model.addAttribute("accounts", accountService.listAllAccounts());
+            model.addAttribute("accounts", accountService.listAllActiveAccounts());
             model.addAttribute("lastTransactions", transactionService.findLast10Transactions());
 
             return "transaction/make-transfer";
