@@ -1,7 +1,7 @@
 package com.cydeo.controller;
 
+import com.cydeo.dto.AccountDTO;
 import com.cydeo.enums.AccountType;
-import com.cydeo.model.Account;
 import com.cydeo.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.UUID;
 
 @Controller
 public class AccountController {
@@ -32,34 +30,34 @@ public class AccountController {
     @GetMapping("/create-form")
     public String getCreateFormPage(Model model){
 
-        model.addAttribute("account", Account.builder().build());
+        model.addAttribute("account", new AccountDTO());
         model.addAttribute("accountTypes", AccountType.values());
 
         return "/account/create-account";
     }
 
     @PostMapping("/create")
-    public String createAccount(@Valid @ModelAttribute("account") Account account, BindingResult bindingResult, Model model){
+    public String createAccount(@Valid @ModelAttribute("account") AccountDTO accountDTO, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
             model.addAttribute("accountTypes", AccountType.values());
             return "/account/create-account";
         }
 
-        System.out.println(account);
-        Account newAccount = accountService.createNewAccount(account.getBalance(), new Date(), account.getAccountType(), account.getUserId());
-        System.out.println(newAccount);
+        System.out.println(accountDTO);
+        accountService.createNewAccount(accountDTO);
+   //     System.out.println(newAccountDTO);
         return "redirect:/index";
     }
     @GetMapping("/delete/{id}")
-    public String deleteAccount(@PathVariable("id") UUID id){
+    public String deleteAccount(@PathVariable("id") Long id){
 
         accountService.deleteByID(id);
         return "redirect:/index";
     }
 
     @GetMapping("/activate/{id}")
-    public String activateAccount(@PathVariable("id") UUID id){
+    public String activateAccount(@PathVariable("id") Long id){
 
         accountService.activateByID(id);
         return "redirect:/index";

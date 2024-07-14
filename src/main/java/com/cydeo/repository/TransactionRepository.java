@@ -1,38 +1,46 @@
 package com.cydeo.repository;
 
-import com.cydeo.model.Transaction;
+import com.cydeo.dto.TransactionDTO;
+import com.cydeo.entity.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Component
-public class TransactionRepository {
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+/*
+    public static List<TransactionDTO> transactionDTOList = new ArrayList<>();
 
-    public static List<Transaction> transactionList = new ArrayList<>();
-
-    public Transaction save(Transaction transaction) {
-        transactionList.add(transaction);
-        return transaction;
+    public TransactionDTO save(TransactionDTO transactionDTO) {
+        transactionDTOList.add(transactionDTO);
+        return transactionDTO;
     }
 
-    public List<Transaction> findAll(){
-        return transactionList;
+    public List<TransactionDTO> findAll(){
+        return transactionDTOList;
     }
 
-    public List<Transaction> findLast10Transactions() {
+    public List<TransactionDTO> findLast10Transactions() {
 
 
-        return transactionList.stream().sorted(Comparator.comparing(Transaction::getCreateDate).reversed())
+        return transactionDTOList.stream().sorted(Comparator.comparing(TransactionDTO::getCreateDate).reversed())
                 .limit(10).collect(Collectors.toList());
     }
 
-    public List<Transaction> findTransactionListByAccountId(UUID id) {
-        return transactionList.stream()
-                .filter(transaction-> (transaction.getReceiver().equals(id) || transaction.getSender().equals(id)))
+    public List<TransactionDTO> findTransactionListByAccountId(Long id) {
+        return transactionDTOList.stream()
+                .filter(transactionDTO -> (transactionDTO.getReceiver().equals(id) || transactionDTO.getSender().equals(id)))
                 .collect(Collectors.toList());
     }
+
+
+ */
+
+
+
 }
